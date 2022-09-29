@@ -2,16 +2,19 @@ NAME=jupyternotebook
 VERSION=0.0.1
 
 build:
-	docker build -t $(NAME):$(VERSION) .
+	docker build --no-cache -t $(NAME):$(VERSION) .
 
 restart: stop start
 
 start:
-	docker run  \
+	mkdir -p $(CURDIR)
+	docker run -d \
 		-p 8888:8888 \
 		-v $(CURDIR)/data:/data \
 		--name $(NAME) \
 		$(NAME):$(VERSION)
+	docker logs --follow $(NAME)
+
 
 contener=`docker ps -a -q`
 image=`docker images | awk '/^<none>/ { print $$3 }'`
@@ -26,9 +29,6 @@ clean:
 
 stop:
 	docker rm -f $(NAME)
-
-attach:
-	docker exec -it $(NAME) /bin/bash
 
 logs:
 	docker logs $(NAME)
