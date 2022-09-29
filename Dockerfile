@@ -6,5 +6,7 @@ RUN pip3 install notebook
 RUN pip3 install RISE
 RUN jupyter-nbextension install rise --py --sys-prefix
 RUN jupyter nbextension enable rise --py --sys-prefix
+RUN pip3 install jupyter_contrib_nbextensions
+RUN jupyter contrib nbextension install
 RUN mkdir /data
 CMD cd /data; jupyter notebook --ip=* --no-browser --allow-root
