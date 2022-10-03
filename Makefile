@@ -1,4 +1,4 @@
-NAME=jupyternotebook
+NAME=$(shell basename $(CURDIR))
 VERSION=0.0.1
 
 build:
